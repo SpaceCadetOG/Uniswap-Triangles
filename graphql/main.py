@@ -28,7 +28,7 @@ def retrieve_uniswap_information():
     eth = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
     arbi = "https://api.thegraph.com/subgraphs/name/ianlapham/arbitrum-minimal"
 
-    req = requests.post(arbi, json={'query': query})
+    req = requests.post(eth, json={'query': query})
     json_dict = json.loads(req.text)
     return json_dict
 
