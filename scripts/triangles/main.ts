@@ -51,26 +51,25 @@ function getFile(fPath: string)
 
     }
 }
-
 // CALCULATE ARB //////////////////////////
-async function calculateArbitrage(amountIn: number, amountOut: number, surfaceObj: any) {
+async function calculateArbitrage(amountIn: number, amountOut: number, surfaceObj: any)
+{
 
     // Calculate profit or loss
     let threshold = 0
     let resultArray = [surfaceObj]
     let profitLossPerc = 0
     let profitLoss = amountOut - amountIn
-    if (profitLoss > threshold) {
-      profitLossPerc = (profitLoss / amountIn) * 100
-  
-      // Provide Output Result
-      resultArray.push({profitLossPerc: profitLossPerc})
-      console.log(resultArray)
+    if (profitLoss > threshold)
+    {
+        profitLossPerc = (profitLoss / amountIn) * 100
+
+        // Provide Output Result
+        resultArray.push({ profitLossPerc: profitLossPerc })
+        console.log(resultArray)
     }
     return
-  }
-  
-
+}
 async function getBlockNumber()
 {
     let block = await provider.getBlockNumber()
@@ -194,7 +193,6 @@ async function getPrice(factory: any, amountIn: number, tradeDirection: string)
     return outputAmount
 
 }
-
 // Read File ************
 async function getDepth(amountIn: number, limit: number)
 {
@@ -234,7 +232,6 @@ async function getDepth(amountIn: number, limit: number)
 
     return
 }
-
 
 async function main()
 {
