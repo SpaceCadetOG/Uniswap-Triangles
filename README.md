@@ -1,15 +1,5 @@
-# Sample Hardhat Project
+# Uniswap Triangles
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+ 1. Run Py Script
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
-
-nodemon --exec hh run fundamentals/pullPrices/index.ts 
+ 2. Convert To Floundry

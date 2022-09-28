@@ -2,8 +2,8 @@
 pragma solidity ^0.8.10;
 
 contract UniswapV3Flash {
-    address private constant FACTORY = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
-
+    address private constant FACTORY =
+        0x1F98431c8aD98523631AE4a59f267346ea31F984;
     struct FlashCallbackData {
         uint amount0;
         uint amount1;
@@ -40,7 +40,11 @@ contract UniswapV3Flash {
 
     function flash(uint amount0, uint amount1) external {
         bytes memory data = abi.encode(
-            FlashCallbackData({amount0: amount0, amount1: amount1, caller: msg.sender})
+            FlashCallbackData({
+                amount0: amount0,
+                amount1: amount1,
+                caller: msg.sender
+            })
         );
         IUniswapV3Pool(pool).flash(address(this), amount0, amount1, data);
     }
@@ -52,7 +56,10 @@ contract UniswapV3Flash {
     ) external {
         require(msg.sender == address(pool), "not authorized");
 
-        FlashCallbackData memory decoded = abi.decode(data, (FlashCallbackData));
+        FlashCallbackData memory decoded = abi.decode(
+            data,
+            (FlashCallbackData)
+        );
 
         // Repay borrow
         if (fee0 > 0) {
@@ -98,7 +105,9 @@ library PoolAddress {
                         abi.encodePacked(
                             hex"ff",
                             factory,
-                            keccak256(abi.encode(key.token0, key.token1, key.fee)),
+                            keccak256(
+                                abi.encode(key.token0, key.token1, key.fee)
+                            ),
                             POOL_INIT_CODE_HASH
                         )
                     )
@@ -124,7 +133,10 @@ interface IERC20 {
 
     function transfer(address recipient, uint amount) external returns (bool);
 
-    function allowance(address owner, address spender) external view returns (uint);
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint);
 
     function approve(address spender, uint amount) external returns (bool);
 
