@@ -1,12 +1,84 @@
-// SPDX-License-Identifier: me
-pragma solidity 0.8.10;
-
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 contract SwapOracle {
-    constructor() {}
+    address public factory;
 
-    function GetTWAP() external view returns (uint256 price) {
-    // time weight avg price
-    
-        return price;
+
+    constructor(address _factory) {
+        _factory = factory;
+    }
+
+    function getPool(
+        address _token0,
+        address _token1,
+        uint24 _fee
+    ) public view returns (address pool) {
+        PoolAddress.PoolKey memory poolKey = PoolAddress.getPoolKey(
+            _token0,
+            _token1,
+            _fee
+        );
+        require(
+            PoolAddress.computeAddress(factory, poolKey) != address(0),
+            "pool doesn't exist"
+        );
+        pool = PoolAddress.computeAddress(factory, poolKey);
+        return pool;
+    }
+
+    function estimateAmountOut(
+        address tokenIn,
+        uint128 amountIn,
+                address tokenOut,
+        uint32 secondsAgo
+    ) external view returns (uint amountOut) {
+
+        return amountOut;
+    }
+
+}
+
+library PoolAddress {
+    bytes32 internal constant POOL_INIT_CODE_HASH =
+        0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;
+
+    struct PoolKey {
+        address token0;
+        address token1;
+        uint24 fee;
+    }
+
+    function getPoolKey(
+        address tokenA,
+        address tokenB,
+        uint24 fee
+    ) internal pure returns (PoolKey memory) {
+        if (tokenA > tokenB) (tokenA, tokenB) = (tokenB, tokenA);
+        return PoolKey({token0: tokenA, token1: tokenB, fee: fee});
+    }
+
+    function computeAddress(address factory, PoolKey memory key)
+        internal
+        pure
+        returns (address pool)
+    {
+        require(key.token0 < key.token1);
+        pool = address(
+            uint160(
+                uint(
+                    keccak256(
+                        abi.encodePacked(
+                            hex"ff",
+                            factory,
+                            keccak256(
+                                abi.encode(key.token0, key.token1, key.fee)
+                            ),
+                            POOL_INIT_CODE_HASH
+                        )
+                    )
+                )
+            )
+        );
     }
 }

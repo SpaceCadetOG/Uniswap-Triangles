@@ -6,12 +6,13 @@
   "author": "VictorOgbebor <victor.ogbebor@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
     "@uniswap/sdk": "^3.0.3",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-graphql": "^0.12.0",
     "graphql": "^16.6.0",
-    "hardhat": "^2.11.2"
+    "hardhat": "npm:@gzeoneth/hardhat@2.10.1-gzeon-c8fe47dd4"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
